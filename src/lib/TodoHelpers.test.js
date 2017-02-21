@@ -1,4 +1,4 @@
-import {addTodo, findById, toggleTodo, updateTodo, removeTodo} from './todoHelpers';
+import {addTodo, findById, toggleTodo, updateTodo, removeTodo, filterTodos} from './todoHelpers';
 
 test('addTodo should add the passed todo to the list', () => {
 	const startTodos = [
@@ -108,7 +108,7 @@ test('filterTodos should return all items for the root route', () => {
 		{id: 2, name: 'two', isCompleted: true},
 		{id: 3, name: 'three', isCompleted: false}
 	]
-	result = filterTodos(startTodos, '/')
+	const result = filterTodos(startTodos, '/')
 	expect(result).toEqual(startTodos)	
 })
 
@@ -121,7 +121,7 @@ test('filterTodos should return only completed items for the complete route', ()
 	const expected = [
 		{id: 2, name: 'two', isCompleted: true}
 	]
-	result = filterTodos(startTodos, '/complete')
+	const result = filterTodos(startTodos, '/complete')
 	expect(result).toEqual(expected)
 })
 
@@ -135,6 +135,6 @@ test('filterTodos should return only incompleted items for the active route', ()
 		{id: 1, name: 'one', isCompleted: false},
 		{id: 3, name: 'three', isCompleted: false}
 	]
-	result = filterTodos(startTodos, '/active')
+	const result = filterTodos(startTodos, '/active')
 	expect(result).toEqual(expected)	
 })

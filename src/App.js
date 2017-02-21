@@ -4,14 +4,11 @@ import './App.css';
 import {TodoForm, TodoList, Footer} from './components/todo';
 import {addTodo, generateId, findById, toggleTodo, updateTodo, removeTodo, filterTodos} from './lib/TodoHelpers';
 import {pipe, partial} from './lib/utils';
+import {loadTodos, createTodo} from './lib/TodoService';
 
 class App extends Component {
   state = {
-    todos: [
-      {id: 1, name: 'Learn JSX', isCompleted: true},
-      {id: 2, name: 'Build an Awesome App', isCompleted: false},
-      {id: 3, name: 'Ship it!', isCompleted: false}
-    ],
+    todos: [],
     currentTodo: '',
     errorMessage: ''
   };
@@ -20,6 +17,12 @@ class App extends Component {
     route: React.PropTypes.string
   };
 
+  componentDidMount() {
+    loadTodos()
+      .then(todos => this.setState({todos}))
+  }
+  
+  
   handleInputChange = (e) => {
     this.setState({currentTodo: e.target.value});
   };
@@ -49,7 +52,9 @@ class App extends Component {
       todos: updatedTodos,
       currentTodo: '',
       errorMessage: ''
-    });      
+    });
+    createTodo(newTodo)
+      .then(() => console.log('Todo added'));
   }; 
 
   handleEmptySubmit = (e) => {
